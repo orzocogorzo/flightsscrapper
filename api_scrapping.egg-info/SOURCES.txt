@@ -1,6 +1,0 @@
-MANIFEST.in
-api_scrapping.egg-info/PKG-INFO
-api_scrapping.egg-info/SOURCES.txt
-api_scrapping.egg-info/dependency_links.txt
-api_scrapping.egg-info/requires.txt
-api_scrapping.egg-info/top_level.txt
