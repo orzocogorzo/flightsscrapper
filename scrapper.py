@@ -1,7 +1,15 @@
 import requests
 from pymongo import MongoClient
 from bson.json_util import dumps
+from simplejson import dump
+from threading import Thread
 import time
+import smtplib
+from email.mime.application import MIMEApplication
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.utils import formatdate, COMMASPACE
+import gzip
 
 
 class ApiHandler:
@@ -43,7 +51,9 @@ class ApiHandler:
             ]
         }
 
-        self.run()
+        self.dump_path = 'dumps/dump.gz'
+
+        self.run_background()
 
     def build_params(self):
         params = {
@@ -60,11 +70,8 @@ class ApiHandler:
         }
         return params
 
-
-
     def build_bounds(self):
         return ','.join([str(d) for d in self.bounds])
-
 
     def get_request(self):
         base_url = "https://data-live.flightradar24.com"
@@ -84,6 +91,12 @@ class ApiHandler:
         flights_cl = db.flights
 
         while True:
+            count = flights_cl.count()
+            if count >= 10000:
+                self.mongodump()
+            else:
+                print("collection has {} documents".format(count))
+
             response = self.get_request()
             del response['full_count']
             del response['version']
@@ -122,6 +135,59 @@ class ApiHandler:
 
         return iter([sdata])
 
+    def compress_dump(self, data):
+        with gzip.open(self.dump_path, 'wt') as f:
+            dump(data, f)
+
+    def mongodump(self):
+        db = self.client.flights_db
+        flights_cl = db.flights
+
+        data = dumps([x for x in flights_cl.find()])
+        self.compress_dump(data)
+
+        self.send_email()
+        flights_cl.delete_many()
+
+    def run_background(self):
+        print('start running on background function {}'.format(self.run.__name__))
+        b = Thread(name="background", target=self.run)
+        b.start()
+
+    def send_email(self):
+        """
+            When db is full, dump data and send it to my email
+        :return:
+        """
+        print("\n\nSENDING EMAIL TO: lucasgarciabaro@gmail.com\n\n")
+        msg = MIMEMultipart()
+
+        msg["From"] = "lucasgarciabaro@gmail.com"
+        msg["To"] = COMMASPACE.join(["lucasgarciabaro@gmail.com"])
+        msg["Date"] = formatdate(localtime=True)
+        msg["Subject"] = "flights_db dump"
+
+        msg.attach(MIMEText("new dump of flights_db from heroku"))
+
+        name = "{}.gz".format(time.strftime("%m/%d-%H:%M"))
+
+        with open(self.dump_path, 'rb') as f:
+            part = MIMEApplication(
+                f.read(),
+                Name=name
+            )
+            part["Content-Disposition"] = "attachment; filename='%s'" % name
+            msg.attach(part)
+
+        smtp = smtplib.SMTP("127.0.0.1")
+        smtp.sendmail(
+            "lucasgarciabaro@gmail.com",
+            ["lucasgarciabaro@gmail.com"],
+            msg.as_string()
+        )
+
+        smtp.close()
+
 
 api = ApiHandler()
-run_api = api.get
+api_service = api.get

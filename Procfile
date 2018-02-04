@@ -1,1 +1,1 @@
-web: gunicorn scrapper:run_api
+web: gunicorn scrapper:api_service
