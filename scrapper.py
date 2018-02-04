@@ -67,6 +67,7 @@ class ApiHandler:
             MONGO_URI = "mongodb://localhost:27017/"
 
         self.client = MongoClient(MONGODB_URI)
+        print(MONGO_URI, self.client)
 
     def build_params(self):
         """
