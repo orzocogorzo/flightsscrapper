@@ -233,14 +233,20 @@ class ApiHandler:
             part["Content-Disposition"] = "attachment; filename='%s'" % name
             msg.attach(part)
 
-        smtp = smtplib.SMTP("127.0.0.1")
+        smtp = smtplib.SMTP("smtp.gmail.com:587")
+        smtp.starttls()
+
+        user = environ.get('email_user')
+        password = environ.get('email_password')
+        smtp.login(user, password)
+
         smtp.sendmail(
             "lucasgarciabaro@gmail.com",
             ["lucasgarciabaro@gmail.com"],
             msg.as_string()
         )
 
-        smtp.close()
+        smtp.quit()
 
 
 api = ApiHandler()
