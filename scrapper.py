@@ -73,6 +73,8 @@ class ApiHandler:
             socketKeepAlive=True
         )
 
+        self.db = self.client.get_database('flights_db')
+
     def build_params(self):
         """
             return the api formated params
@@ -120,8 +122,7 @@ class ApiHandler:
             infinit loop handling the data scapping
         :return:
         """
-        db = self.client.flights_db
-        flights_cl = db.flights
+        flights_cl = self.db['flights']
 
         while True:
             count = flights_cl.count()
@@ -167,8 +168,7 @@ class ApiHandler:
         :param start_res:
         :return:
         """
-        db = self.client.flights_db
-        flights_cl = db.flights
+        flights_cl = self.db['flights']
 
         data = [x for x in flights_cl.find()]
         sdata = dumps(data).encode()
