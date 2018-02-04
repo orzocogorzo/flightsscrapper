@@ -62,12 +62,16 @@ class ApiHandler:
             setup db connection
         :return:
         """
-        MONGODB_URI = environ.get('MONGODB_URI')
+        MONGODB_URI = "mongodb://heroku_9r7ph3gv:m2kk049iebusqb1hj64vksma0d@ds223738.mlab.com:23738/heroku_9r7ph3gv" #environ.get('MONGODB_URI')
         if not MONGODB_URI:
             MONGODB_URI = "mongodb://localhost:27017/"
 
-        self.client = MongoClient(MONGODB_URI)
-        print(MONGODB_URI, self.client)
+        self.client = MongoClient(
+            MONGODB_URI,
+            connectTimeoutMS=30000,
+            socketTimeoutMS=None,
+            socketKeepAlive=True
+        )
 
     def build_params(self):
         """
@@ -120,11 +124,11 @@ class ApiHandler:
         flights_cl = db.flights
 
         while True:
-            count = 0
-            try:
-                count = len([x for x in flights_cl.find()])
-            except ValueError:
-                print('count = ' + str(count))
+            count = flights_cl.count()
+            # try:
+            #     count = flights_cl.count()
+            # except ValueError:
+            #     print('count = ' + str(count))
 
             if count >= 100000:
                 self.mongodump()
