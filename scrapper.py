@@ -122,7 +122,7 @@ class ApiHandler:
         while True:
             count = 0
             try:
-                count = flights_cl.count()
+                count = len([x for x in flights_cl.find()])
             except ValueError:
                 print('count = ' + str(count))
 
