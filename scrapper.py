@@ -62,17 +62,14 @@ class ApiHandler:
             setup db connection
         :return:
         """
-        MONGODB_URI = "mongodb://heroku_9r7ph3gv:m2kk049iebusqb1hj64vksma0d@ds223738.mlab.com:23738/heroku_9r7ph3gv" #environ.get('MONGODB_URI')
+        MONGODB_URI = environ.get('MONGODB_URI')
         if not MONGODB_URI:
             MONGODB_URI = "mongodb://localhost:27017/"
+            self.client = MongoClient(MONGODB_URI)
+            self.db = self.client.get_default_database()
+            return
 
-        self.client = MongoClient(
-            MONGODB_URI,
-            connectTimeoutMS=30000,
-            socketTimeoutMS=None,
-            socketKeepAlive=True
-        )
-
+        self.client = MongoClient(MONGODB_URI)
         self.db = self.client.get_database('flights_db')
 
     def build_params(self):
