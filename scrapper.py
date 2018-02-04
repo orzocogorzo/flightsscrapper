@@ -124,7 +124,7 @@ class ApiHandler:
             try:
                 count = flights_cl.count()
             except ValueError:
-                print('count = ', + str(count))
+                print('count = ' + str(count))
 
             if count >= 100000:
                 self.mongodump()
