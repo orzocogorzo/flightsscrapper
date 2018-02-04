@@ -64,10 +64,10 @@ class ApiHandler:
         """
         MONGODB_URI = environ.get('MONGODB_URI')
         if not MONGODB_URI:
-            MONGO_URI = "mongodb://localhost:27017/"
+            MONGODB_URI = "mongodb://localhost:27017/"
 
         self.client = MongoClient(MONGODB_URI)
-        print(MONGO_URI, self.client)
+        print(MONGODB_URI, self.client)
 
     def build_params(self):
         """
