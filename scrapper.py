@@ -66,11 +66,11 @@ class ApiHandler:
         if not MONGODB_URI:
             MONGODB_URI = "mongodb://localhost:27017/"
             self.client = MongoClient(MONGODB_URI)
-            self.db = self.client.get_default_database()
+            self.db = self.client.get_database('flights_db')
             return
 
         self.client = MongoClient(MONGODB_URI)
-        self.db = self.client.get_database('flights_db')
+        self.db = self.client.get_default_database()
 
     def build_params(self):
         """
