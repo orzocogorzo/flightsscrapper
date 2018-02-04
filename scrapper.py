@@ -120,7 +120,12 @@ class ApiHandler:
         flights_cl = db.flights
 
         while True:
-            count = flights_cl.count()
+            count = 0
+            try:
+                count = flights_cl.count()
+            except ValueError:
+                print('count = ', + str(count))
+
             if count >= 100000:
                 self.mongodump()
             else:
