@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "155d843a87d57eb82710707a278d8946a477cd819d3dc349d2a70c314d5132de"
+            "sha256": "051bfb60b984f6a57be9729747ea5e62672a1f19c1bd0eed858084436fc6c46f"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -113,9 +113,6 @@
                 "sha256:9c443e7324ba5b85070c4a818ade28bfabedf16ea10206da1132edaa6dda237e"
             ],
             "version": "==2.18.4"
-        },
-        "scrapper": {
-            "path": "./scrapper"
         },
         "urllib3": {
             "hashes": [

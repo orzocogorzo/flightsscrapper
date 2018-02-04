@@ -2,27 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ba8bccb8-8b2b-40db-b923-7374958d1359" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/2017-08-spy-plane-finder-master/README.md" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/2017-08-spy-plane-finder-master/data/candidates.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/2017-08-spy-plane-finder-master/data/candidates_annotated.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/2017-08-spy-plane-finder-master/data/faa-registration.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/2017-08-spy-plane-finder-master/data/feds.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/2017-08-spy-plane-finder-master/data/planes_features.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/2017-08-spy-plane-finder-master/data/train.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/2017-08-spy-plane-finder-master/index.Rmd" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/2017-08-spy-plane-finder-master/index.html" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/MANIFEST.in" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/api_scrapping.egg-info/PKG-INFO" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/api_scrapping.egg-info/SOURCES.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/api_scrapping.egg-info/dependency_links.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/api_scrapping.egg-info/requires.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/api_scrapping.egg-info/top_level.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/api_scrapping/__init__.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/api_scrapping/__meta__.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/api_scrapping/flights_api.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/api_scrapping/scrapper.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/notes_flights.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/setup.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Pipfile" afterPath="$PROJECT_DIR$/Pipfile" />
+      <change beforePath="$PROJECT_DIR$/Pipfile.lock" afterPath="$PROJECT_DIR$/Pipfile.lock" />
+      <change beforePath="$PROJECT_DIR$/Procfile" afterPath="$PROJECT_DIR$/Procfile" />
+      <change beforePath="$PROJECT_DIR$/scrapper/MANIFEST.in" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/scrapper/scrapper/__init__.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/scrapper/scrapper/__meta__.txt" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/scrapper/scrapper/api_handler.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/scrapper/setup.py" afterPath="" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -36,8 +23,8 @@
       <file leaf-file-name="Pipfile" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Pipfile">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+            <state relative-caret-position="252">
+              <caret line="14" column="22" lean-forward="true" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -47,32 +34,20 @@
         <entry file="file://$PROJECT_DIR$/Procfile">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="0" column="31" lean-forward="false" selection-start-line="0" selection-start-column="31" selection-end-line="0" selection-end-column="31" />
+              <caret line="0" column="30" lean-forward="true" selection-start-line="0" selection-start-column="30" selection-end-line="0" selection-end-column="30" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="api_handler.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scrapper/scrapper/api_handler.py">
+      <file leaf-file-name="scrapper.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/scrapper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="56" column="9" lean-forward="true" selection-start-line="56" selection-start-column="9" selection-end-line="56" selection-end-column="9" />
+            <state relative-caret-position="360">
+              <caret line="20" column="50" lean-forward="true" selection-start-line="20" selection-start-column="50" selection-end-line="20" selection-end-column="50" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
-                <element signature="e#818#1341#0" expanded="false" />
-                <element signature="e#842#1331#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/scrapper/scrapper/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="14" lean-forward="true" selection-start-line="0" selection-start-column="14" selection-end-line="0" selection-end-column="14" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -109,9 +84,10 @@
         <option value="$PROJECT_DIR$/api_scrapper/setup.py" />
         <option value="$PROJECT_DIR$/Pipfile" />
         <option value="$PROJECT_DIR$/scrapper/scrapper/run.py" />
-        <option value="$PROJECT_DIR$/Procfile" />
         <option value="$PROJECT_DIR$/scrapper/scrapper/api_handler.py" />
         <option value="$PROJECT_DIR$/scrapper/scrapper/__init__.py" />
+        <option value="$PROJECT_DIR$/scrapper.py" />
+        <option value="$PROJECT_DIR$/Procfile" />
       </list>
     </option>
   </component>
@@ -143,17 +119,6 @@
             <path>
               <item name="flights" type="b2602c69:ProjectViewProjectNode" />
               <item name="flights" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="flights" type="b2602c69:ProjectViewProjectNode" />
-              <item name="flights" type="462c0819:PsiDirectoryNode" />
-              <item name="scrapper" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="flights" type="b2602c69:ProjectViewProjectNode" />
-              <item name="flights" type="462c0819:PsiDirectoryNode" />
-              <item name="scrapper" type="462c0819:PsiDirectoryNode" />
-              <item name="scrapper" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -255,8 +220,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-4" width="1366" height="727" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21060605" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21060605" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.4969697" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="R Packages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="R Graphics" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -446,14 +412,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Pipfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scrapper/scrapper/runscrapper.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-372">
@@ -478,31 +436,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Procfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="31" lean-forward="false" selection-start-line="0" selection-start-column="31" selection-end-line="0" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scrapper/scrapper/api_handler.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="630">
           <caret line="56" column="9" lean-forward="true" selection-start-line="56" selection-start-column="9" selection-end-line="56" selection-end-column="9" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <element signature="e#818#1341#0" expanded="false" />
-            <element signature="e#842#1331#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scrapper/scrapper/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="14" lean-forward="true" selection-start-line="0" selection-start-column="14" selection-end-line="0" selection-end-column="14" />
+        <state relative-caret-position="54">
+          <caret line="3" column="16" lean-forward="true" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Procfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="30" lean-forward="true" selection-start-line="0" selection-start-column="30" selection-end-line="0" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pipfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="14" column="22" lean-forward="true" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scrapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="20" column="50" lean-forward="true" selection-start-line="20" selection-start-column="50" selection-end-line="20" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
