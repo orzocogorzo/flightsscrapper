@@ -27,7 +27,7 @@ class ApiHandler:
 
         self.client = MongoClient()
         # template_bounds = ["y1","y2","x1","x2"]
-        self.bounds = [47.92, 29.77, -28.22, 2.68]
+        self.bounds = [60.24, 46.30, -24.75, 6.15]
         self.data_keys = {
             "adshex": [
                 "flight_id",
@@ -92,7 +92,7 @@ class ApiHandler:
 
         while True:
             count = flights_cl.count()
-            if count >= 10000:
+            if count >= 100000:
                 self.mongodump()
             else:
                 print("collection has {} documents".format(count))
@@ -147,7 +147,7 @@ class ApiHandler:
         self.compress_dump(data)
 
         self.send_email()
-        flights_cl.delete_many()
+        flights_cl.delete_many({})
 
     def run_background(self):
         print('start running on background function {}'.format(self.run.__name__))

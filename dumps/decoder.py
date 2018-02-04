@@ -3,7 +3,7 @@ import sys
 
 
 def decode(t):
-    data = loads(open(t, 'r'))
+    data = loads(open(t, 'r').read())
 
     with open(t, 'w') as out:
         out.write(data)
