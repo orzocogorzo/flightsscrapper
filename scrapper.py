@@ -10,6 +10,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import formatdate, COMMASPACE
 import gzip
+from os import environ
 
 
 class ApiHandler:
@@ -25,7 +26,8 @@ class ApiHandler:
             "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0"
         }
 
-        self.client = MongoClient()
+        self.db_connection()
+
         # template_bounds = ["y1","y2","x1","x2"]
         self.bounds = [60.24, 46.30, -24.75, 6.15]
         self.data_keys = {
@@ -55,7 +57,22 @@ class ApiHandler:
 
         self.run_background()
 
+    def db_connection(self):
+        """
+            setup db connection
+        :return:
+        """
+        MONGODB_URI = environ.get('MONGODB_URI')
+        if not MONGODB_URI:
+            MONGO_URI = "mongodb://localhost:27017/"
+
+        self.client = MongoClient(MONGODB_URI)
+
     def build_params(self):
+        """
+            return the api formated params
+        :return:
+        """
         params = {
             "adsb": 1,
             "bounds": self.build_bounds(),
@@ -71,9 +88,17 @@ class ApiHandler:
         return params
 
     def build_bounds(self):
+        """
+            format bounds with the api endpoint requirements
+        :return:
+        """
         return ','.join([str(d) for d in self.bounds])
 
     def get_request(self):
+        """
+            build request with requests library and return response in json format
+        :return:
+        """
         base_url = "https://data-live.flightradar24.com"
         api_route = "/zones/fcgi/feed.js"
         query_params = self.build_params()
@@ -86,7 +111,10 @@ class ApiHandler:
             return {"code": 400}
 
     def run(self):
-
+        """
+            infinit loop handling the data scapping
+        :return:
+        """
         db = self.client.flights_db
         flights_cl = db.flights
 
@@ -123,6 +151,12 @@ class ApiHandler:
             time.sleep(60)
 
     def get(self, env, start_res):
+        """
+            response to get gunicorn requests
+        :param env:
+        :param start_res:
+        :return:
+        """
         db = self.client.flights_db
         flights_cl = db.flights
 
@@ -136,10 +170,19 @@ class ApiHandler:
         return iter([sdata])
 
     def compress_dump(self, data):
+        """
+            get data as input params and generate a file on dumps folder with de compressed data
+        :param data:
+        :return:
+        """
         with gzip.open(self.dump_path, 'wt') as f:
             dump(data, f)
 
     def mongodump(self):
+        """
+            dump data from the db and send an email with de compressed result
+        :return:
+        """
         db = self.client.flights_db
         flights_cl = db.flights
 
@@ -150,6 +193,10 @@ class ApiHandler:
         flights_cl.delete_many({})
 
     def run_background(self):
+        """
+            run infinit loop on the background to allow response to get requests
+        :return:
+        """
         print('start running on background function {}'.format(self.run.__name__))
         b = Thread(name="background", target=self.run)
         b.start()
