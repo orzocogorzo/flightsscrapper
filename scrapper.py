@@ -1,5 +1,6 @@
 import requests
 from pymongo import MongoClient
+from bson.json_util import dumps
 import time
 
 
@@ -41,6 +42,8 @@ class ApiHandler:
                 "unknown3",
             ]
         }
+
+        self.run()
 
     def build_params(self):
         params = {
@@ -106,6 +109,19 @@ class ApiHandler:
 
             time.sleep(60)
 
+    def get(self, env, start_res):
+        db = self.client.flights_db
+        flights_cl = db.flights
+
+        data = [x for x in flights_cl.find()]
+        sdata = dumps(data).encode()
+        start_res("200 OK", [
+            ("Content-Type", "application/json"),
+            ("Content-Length", str(len(sdata)))
+        ])
+
+        return iter([sdata])
+
 
 api = ApiHandler()
-run_api = api.run
+run_api = api.get
