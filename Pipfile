@@ -9,6 +9,7 @@ verify_ssl = true
 pymongo = "*"
 requests = "*"
 gunicorn = "*"
+simplejson = "*"
 
 
 [requires]
