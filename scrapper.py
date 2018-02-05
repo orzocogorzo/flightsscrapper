@@ -1,5 +1,6 @@
 import requests
-from pymongo import MongoClient
+#from pymongo import MongoClient
+
 from bson.json_util import dumps
 from simplejson import dump
 from threading import Thread
