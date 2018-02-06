@@ -62,7 +62,7 @@ class ApiHandler:
             setup db connection
         :return:
         """
-        MONGODB_URI = environ.get('MONGODB_URI')
+        MONGODB_URI = environ.get('MONGODB_URI', connect=False)
         if not MONGODB_URI:
             MONGODB_URI = "mongodb://localhost:27017/"
             self.client = MongoClient(MONGODB_URI)
