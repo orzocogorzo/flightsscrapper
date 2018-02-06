@@ -1,7 +1,5 @@
 import requests
-#from pymongo import MongoClient
-
-from bson.json_util import dumps
+import MySQLdb as mysql
 from simplejson import dump
 from threading import Thread
 import time
@@ -55,23 +53,21 @@ class ApiHandler:
         }
 
         self.dump_path = 'dumps/dump.gz'
-
-        self.run_background()
+        #self.run_background()
+        self.run()
 
     def db_connection(self):
         """
             setup db connection
         :return:
         """
-        MONGODB_URI = environ.get('MONGODB_URI')
-        if not MONGODB_URI:
-            MONGODB_URI = "mongodb://localhost:27017/"
-            self.client = MongoClient(MONGODB_URI)
-            self.db = self.client.get_database('flights_db')
-            return
-
-        self.client = MongoClient(MONGODB_URI)
-        self.db = self.client.get_default_database()
+        self.db = mysql.connect(
+            host='orzo.mysql.pythonanywhere-services.com',
+            user='orzo',
+            passwd='orzo',
+            db='flights_db'
+        )
+        self.cur = self.db.cursor()
 
     def build_params(self):
         """
@@ -120,19 +116,15 @@ class ApiHandler:
             infinit loop handling the data scapping
         :return:
         """
-        flights_cl = self.db['flights']
 
         while True:
-            count = flights_cl.count()
-            # try:
-            #     count = flights_cl.count()
-            # except ValueError:
-            #     print('count = ' + str(count))
+            self.cur.execute("SELECT count(*) FROM flights;")
+            count = int(self.cur.fetchone()[0])
 
             if count >= 100000:
-                self.mongodump()
+                self.mysql_dump()
             else:
-                print("collection has {} documents".format(count))
+                print("table has {} rows".format(count))
 
             response = self.get_request()
             del response['full_count']
@@ -140,22 +132,61 @@ class ApiHandler:
 
             bulk = []
             for k, v in response.items():
-                data = {
-                    "adshex": k
-                }
+                data = (str(k),)
 
-                key_val = {}
-                i = 0
                 for d in v:
-                    key_val[self.data_keys["adshex"][i]] = d
-                    i = i + 1
+                    data = data + (str(d),)
 
-                data.update(key_val)
+                if len(data) == 19:
+                    bulk.append(data)
 
-                bulk.append(data)
+            self.cur.executemany(
+                """INSERT INTO flights (
+                  adshex,
+                  flight_id,
+                  lat,
+                  lng,
+                  track,
+                  alt,
+                  speed,
+                  squawk,
+                  radar,
+                  type,
+                  registration,
+                  timestamp,
+                  s_airport,
+                  t_airport,
+                  IATA,
+                  unknown1,
+                  unknown2,
+                  OACI,
+                  unknown3
+                ) VALUES (
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s
+                )""",
+                bulk
+            )
 
-            bulked = flights_cl.insert_many(bulk)
-            print("inserted " + str(len(bulked.inserted_ids)) + " items to db")
+            self.db.commit()
+            print("inserted " + str(len(bulk)) + " items to db")
 
             time.sleep(60)
 
@@ -166,16 +197,19 @@ class ApiHandler:
         :param start_res:
         :return:
         """
-        flights_cl = self.db['flights']
+        self.cur.execute("SELECT * FROM flights")
+        res = self.cur.fetchall()
 
-        data = [x for x in flights_cl.find()]
-        sdata = dumps(data).encode()
+        data = []
+        for row in res:
+            data.append([d for d in row])
+
         start_res("200 OK", [
             ("Content-Type", "application/json"),
-            ("Content-Length", str(len(sdata)))
+            ("Content-Length", str(len(str(data))))
         ])
 
-        return iter([sdata])
+        return iter(data)
 
     def compress_dump(self, data):
         """
@@ -186,19 +220,24 @@ class ApiHandler:
         with gzip.open(self.dump_path, 'wt') as f:
             dump(data, f)
 
-    def mongodump(self):
+    def mysql_dump(self):
         """
             dump data from the db and send an email with de compressed result
         :return:
         """
-        db = self.client.flights_db
-        flights_cl = db.flights
+        self.cur.execute("SELECT * FROM flights")
+        res = self.cur.fetchall()
 
-        data = dumps([x for x in flights_cl.find()])
+        data = []
+        for row in res:
+            data.append([d for d in row])
+
         self.compress_dump(data)
 
         self.send_email()
-        flights_cl.delete_many({})
+
+        self.cur.execute("DELETE FROM flights")
+        self.db.commit()
 
     def run_background(self):
         """
