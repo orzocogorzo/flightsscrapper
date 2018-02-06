@@ -69,7 +69,7 @@ class ApiHandler:
             self.db = self.client.get_database('flights_db')
             return
 
-        self.client = MongoClient(MONGODB_URI, connect=False)
+        self.client = MongoClient(MONGODB_URI)
         self.db = self.client.get_database('flights_db')
 
     def build_params(self):
