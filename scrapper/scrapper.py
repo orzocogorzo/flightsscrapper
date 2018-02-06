@@ -119,7 +119,7 @@ class ApiHandler:
             infinit loop handling the data scapping
         :return:
         """
-        flights_cl = self.db['flights']
+        flights_cl = self.db['flight_points']
 
         while True:
             count = flights_cl.count()
@@ -158,14 +158,14 @@ class ApiHandler:
 
             time.sleep(60)
 
-    def get(self, env, start_res):
+    def get_db(self, env, start_res):
         """
-            response to get gunicorn requests
+            response to get wsgi requests
         :param env:
         :param start_res:
         :return:
         """
-        flights_cl = self.db['flights']
+        flights_cl = self.db['flight_points']
 
         data = [x for x in flights_cl.find()]
         sdata = dumps(data).encode()
@@ -221,7 +221,7 @@ class ApiHandler:
         msg["Date"] = formatdate(localtime=True)
         msg["Subject"] = "flights_db dump"
 
-        msg.attach(MIMEText("new dump of flights_db from heroku"))
+        msg.attach(MIMEText("new dump of flights_db from pythonanywhere"))
 
         name = "{}.gz".format(time.strftime("%m/%d-%H:%M"))
 
@@ -250,4 +250,4 @@ class ApiHandler:
 
 
 api = ApiHandler()
-api_service = api.get
+api_service = api.get_db
