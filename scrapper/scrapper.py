@@ -123,7 +123,7 @@ class ApiHandler:
         flights_cl = self.db['flight_points']
 
         while True:
-            count = flights_cl.count()
+            count = flights_cl.find({}).count()
             # try:
             #     count = flights_cl.count()
             # except ValueError:
