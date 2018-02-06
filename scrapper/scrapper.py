@@ -55,7 +55,7 @@ class ApiHandler:
 
         self.dump_path = 'dumps/dump.gz'
 
-        self.run_background()
+        self.run()
 
     def db_connection(self):
         """
