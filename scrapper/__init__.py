@@ -1,3 +1,5 @@
-from .scrapper import api_service
+from .scrapper import ApiHandler
 
-wsgi = api_service
+api = ApiHandler()
+api.run()
+wsgi_service = api.wsgi
