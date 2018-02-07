@@ -230,8 +230,8 @@ class ApiHandler:
             part["Content-Disposition"] = "attachment; filename='%s'" % name
             msg.attach(part)
 
-        smtp = smtplib.SMTP("smtp.gmail.com:587")
-        smtp.starttls()
+        smtp = smtplib.SMTP_SSL("smtp.gmail.com:465")
+        #smtp.strarssl()
 
         user = environ.get('email_user')
         password = environ.get('email_password')
