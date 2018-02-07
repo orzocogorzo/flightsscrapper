@@ -65,12 +65,13 @@ class ApiHandler:
         MONGODB_URI = environ.get('MONGODB_URI')
         if not MONGODB_URI:
             MONGODB_URI = "mongodb://localhost:27017/"
-            self.client = MongoClient(MONGODB_URI)
+            self.client = MongoClient(MONGODB_URI, connect=False)
             self.db = self.client.get_database('flights_db')
             return
 
-        self.client = MongoClient(MONGODB_URI)
+        self.client = MongoClient(MONGODB_URI, connect=False)
         self.db = self.client.get_default_database()
+        self.coll = self.db['flights']
 
     def build_params(self):
         """
@@ -119,10 +120,9 @@ class ApiHandler:
             infinit loop handling the data scapping
         :return:
         """
-        flights_cl = self.db['flights']
 
         while True:
-            count = flights_cl.count()
+            count = self.coll.count()
             # try:
             #     count = flights_cl.count()
             # except ValueError:
@@ -153,7 +153,7 @@ class ApiHandler:
 
                 bulk.append(data)
 
-            bulked = flights_cl.insert_many(bulk)
+            bulked = self.coll.insert_many(bulk)
             print("inserted " + str(len(bulked.inserted_ids)) + " items to db")
 
             time.sleep(60)
@@ -165,9 +165,8 @@ class ApiHandler:
         :param start_res:
         :return:
         """
-        flights_cl = self.db['flights']
 
-        data = [x for x in flights_cl.find()]
+        data = [x for x in self.coll.find()]
         sdata = dumps(data).encode()
         start_res("200 OK", [
             ("Content-Type", "application/json"),
@@ -190,14 +189,12 @@ class ApiHandler:
             dump data from the db and send an email with de compressed result
         :return:
         """
-        db = self.client.flights_db
-        flights_cl = db.flights
 
-        data = dumps([x for x in flights_cl.find()])
+        data = dumps([x for x in self.coll.find()])
         self.compress_dump(data)
 
         self.send_email()
-        flights_cl.delete_many({})
+        self.coll.delete_many({})
 
     def run_background(self):
         """
