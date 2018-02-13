@@ -232,7 +232,7 @@ class ApiHandler:
 
         smtp = smtplib.SMTP_SSL("smtp.live.com", 587)
         smtp.ehlo()
-        smtp.strarssl()
+        smtp.starttls()
         smtp.ehlo()
 
         user = environ.get('email_user')
