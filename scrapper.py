@@ -128,7 +128,7 @@ class ApiHandler:
             # except ValueError:
             #     print('count = ' + str(count))
 
-            if count >= 100000:
+            if count >= 95000:
                 self.mongodump()
             else:
                 print("collection has {} documents".format(count))
@@ -230,7 +230,7 @@ class ApiHandler:
             part["Content-Disposition"] = "attachment; filename='%s'" % name
             msg.attach(part)
 
-        smtp = smtplib.SMTP_SSL("smtp.live.com", 587)
+        smtp = smtplib.SMTP("smtp.live.com", 587)
         smtp.ehlo()
         smtp.starttls()
         smtp.ehlo()
