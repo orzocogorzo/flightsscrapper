@@ -230,7 +230,7 @@ class ApiHandler:
             part["Content-Disposition"] = "attachment; filename='%s'" % name
             msg.attach(part)
 
-        smtp = smtplib.SMTP("smtp.gmail.com", 587)
+        smtp = smtplib.SMTP("smtp.gmail.com:587")
         smtp.ehlo()
         smtp.starttls()
         smtp.ehlo()
