@@ -111,7 +111,15 @@ class ApiHandler:
         r = requests.get(''.join([base_url, api_route]), params=query_params, headers=self.headers)
 
         if len(r.text):
-            return r.json()
+            try:
+                response = r.json()
+            except ValueError:
+                response = None
+
+            if response:
+                return response
+            else:
+                return {"code": 500}
         else:
             return {"code": 400}
 
